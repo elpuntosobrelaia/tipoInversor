@@ -79,63 +79,79 @@
       Este formulario tiene como objetivo ayudarte a identificar tu perfil como inversor en función de tus características personales, experiencia, tolerancia al riesgo y objetivos financieros. Al completar estas preguntas, podrás conocer qué tipo de productos financieros pueden ajustarse mejor a tu perfil. <strong>Este análisis es solo orientativo</strong> y no constituye una recomendación de inversión personalizada.
     </p>
     <form id="investorForm">
-      <label for="edad">Edad:</label>
-      <input type="number" id="edad" name="edad" required>
+      <label for="edad">¿Cuál es tu edad?</label>
+      <input type="number" id="edad" required>
 
-      <label for="ingresos">¿Cuál es tu ingreso mensual promedio?</label>
-      <select id="ingresos" name="ingresos">
-        <option value="bajo">Menos de 1000€</option>
-        <option value="medio">1000€ - 3000€</option>
-        <option value="alto">Más de 3000€</option>
+      <label for="ingresos">Nivel de ingresos mensuales</label>
+      <select id="ingresos" required>
+        <option value="">Selecciona</option>
+        <option value="alto">Alto</option>
+        <option value="medio">Medio</option>
+        <option value="bajo">Bajo</option>
       </select>
 
-      <label for="ahorro">¿Tienes un fondo de emergencia (ahorros equivalentes a 3-6 meses de gastos)?</label>
-      <select id="ahorro" name="ahorro">
+      <label for="ahorro">¿Tienes capacidad de ahorro mensual?</label>
+      <select id="ahorro" required>
+        <option value="">Selecciona</option>
         <option value="si">Sí</option>
         <option value="no">No</option>
       </select>
 
-      <label for="deudas">¿Tienes actualmente deudas que estés pagando?</label>
-      <select id="deudas" name="deudas">
+      <label for="deudas">¿Tienes deudas actualmente?</label>
+      <select id="deudas" required>
+        <option value="">Selecciona</option>
         <option value="si">Sí</option>
         <option value="no">No</option>
       </select>
 
-      <label for="experiencia">¿Cuánta experiencia tienes invirtiendo?</label>
-      <select id="experiencia" name="experiencia">
+      <label for="experiencia">¿Cuál es tu nivel de experiencia invirtiendo?</label>
+      <select id="experiencia" required>
+        <option value="">Selecciona</option>
         <option value="0">Ninguna</option>
-        <option value="1">Poca</option>
-        <option value="2">Moderada</option>
+        <option value="1">Baja</option>
+        <option value="2">Media</option>
         <option value="3">Alta</option>
       </select>
 
-      <label for="objetivo">¿Cuál es tu objetivo principal?</label>
-      <select id="objetivo" name="objetivo">
-        <option value="ahorro">Ahorrar sin riesgos</option>
-        <option value="ingresos">Generar ingresos pasivos</option>
-        <option value="crecimiento">Crecimiento del capital</option>
-        <option value="especulacion">Especulación a corto plazo</option>
+      <label for="objetivo">¿Cuál es tu principal objetivo de inversión?</label>
+      <select id="objetivo" required>
+        <option value="">Selecciona</option>
+        <option value="ahorro">Ahorro</option>
+        <option value="ingresos">Generar ingresos</option>
+        <option value="crecimiento">Crecimiento patrimonial</option>
+        <option value="especulacion">Especulación</option>
       </select>
 
-      <label for="tolerancia">¿Qué tan tolerante eres al riesgo?</label>
-      <select id="tolerancia" name="tolerancia">
+      <label for="tolerancia">¿Cuál es tu tolerancia al riesgo?</label>
+      <select id="tolerancia" required>
+        <option value="">Selecciona</option>
         <option value="baja">Baja</option>
         <option value="media">Media</option>
         <option value="alta">Alta</option>
       </select>
 
-      <label for="horizonte">¿Cuál es tu horizonte de inversión?</label>
-      <select id="horizonte" name="horizonte">
-        <option value="corto">Corto plazo (menos de 2 años)</option>
-        <option value="medio">Medio plazo (2-5 años)</option>
-        <option value="largo">Largo plazo (más de 5 años)</option>
+      <label for="horizonte">¿Cuál es tu horizonte temporal de inversión?</label>
+      <select id="horizonte" required>
+        <option value="">Selecciona</option>
+        <option value="corto">Corto plazo (&lt;1 año)</option>
+        <option value="medio">Medio plazo (1-5 años)</option>
+        <option value="largo">Largo plazo (&gt;5 años)</option>
       </select>
 
-      <label for="perdida">¿Cómo reaccionarías si tu inversión pierde un 20% de su valor?</label>
-      <select id="perdida" name="perdida">
+      <label for="perdida">¿Qué harías si tus inversiones bajan un 20%?</label>
+      <select id="perdida" required>
+        <option value="">Selecciona</option>
         <option value="vender">Vendería todo</option>
-        <option value="esperar">Esperaría a que se recupere</option>
+        <option value="esperar">Esperaría</option>
         <option value="comprar">Compraría más</option>
+      </select>
+
+      <label for="frecuencia">¿Con qué frecuencia haces seguimiento a tus inversiones?</label>
+      <select id="frecuencia" required>
+        <option value="">Selecciona</option>
+        <option value="ocasional">Ocasional</option>
+        <option value="mensual">Mensual</option>
+        <option value="semanal">Semanal</option>
       </select>
 
       <button type="submit">Evaluar perfil</button>
@@ -155,37 +171,74 @@
       e.preventDefault();
 
       const edad = parseInt(document.getElementById('edad').value);
+      const ingresos = document.getElementById('ingresos').value;
+      const ahorro = document.getElementById('ahorro').value;
+      const deudas = document.getElementById('deudas').value;
       const experiencia = parseInt(document.getElementById('experiencia').value);
       const objetivo = document.getElementById('objetivo').value;
       const tolerancia = document.getElementById('tolerancia').value;
       const horizonte = document.getElementById('horizonte').value;
       const perdida = document.getElementById('perdida').value;
-      const ahorro = document.getElementById('ahorro').value;
-      const deudas = document.getElementById('deudas').value;
+      const frecuencia = document.getElementById('frecuencia').value;
 
+      let score = 0;
+      let detalles = [];
+
+      if (edad < 30) { score += 1; detalles.push("Edad joven (+1)"); }
+      else if (edad < 45) { score += 0.5; detalles.push("Edad media (+0.5)"); }
+
+      if (ingresos === 'alto') { score += 1; detalles.push("Ingresos altos (+1)"); }
+      else if (ingresos === 'medio') { score += 0.5; detalles.push("Ingresos medios (+0.5)"); }
+
+      if (ahorro === 'si') { score += 1; detalles.push("Tiene capacidad de ahorro (+1)"); }
+      if (deudas === 'no') { score += 1; detalles.push("Sin deudas (+1)"); }
+
+      score += experiencia * 0.5;
+      detalles.push(`Experiencia (${experiencia} x 0.5 = ${experiencia * 0.5})`);
+
+      if (objetivo === 'especulacion') { score += 2; detalles.push("Objetivo especulación (+2)"); }
+      else if (objetivo === 'crecimiento') { score += 1.5; detalles.push("Objetivo crecimiento (+1.5)"); }
+      else if (objetivo === 'ingresos') { score += 1; detalles.push("Objetivo ingresos (+1)"); }
+
+      if (tolerancia === 'alta') { score += 2; detalles.push("Alta tolerancia al riesgo (+2)"); }
+      else if (tolerancia === 'media') { score += 1; detalles.push("Tolerancia media al riesgo (+1)"); }
+
+      if (horizonte === 'largo') { score += 1; detalles.push("Horizonte largo plazo (+1)"); }
+      else if (horizonte === 'medio') { score += 0.5; detalles.push("Horizonte medio plazo (+0.5)"); }
+
+      if (perdida === 'comprar') { score += 2; detalles.push("Reacción a pérdida: comprar más (+2)"); }
+      else if (perdida === 'esperar') { score += 1; detalles.push("Reacción a pérdida: esperar (+1)"); }
+
+      if (frecuencia === 'semanal') { score += 1; detalles.push("Seguimiento semanal (+1)"); }
+      else if (frecuencia === 'mensual') { score += 0.5; detalles.push("Seguimiento mensual (+0.5)"); }
+
+      const perfilPuntaje = Math.min(Math.round(score), 10);
       let perfil = '';
       let recomendaciones = '';
       let dataChart = [];
 
-      if ((tolerancia === 'baja' || experiencia === 0 || objetivo === 'ahorro' || perdida === 'vender' || ahorro === 'no' || deudas === 'si')) {
+      if (perfilPuntaje <= 3) {
         perfil = 'Conservador';
         recomendaciones = 'Depósitos a plazo, bonos del Estado, fondos garantizados, cuentas remuneradas.';
         dataChart = [60, 20, 10, 10];
-      } else if ((tolerancia === 'media' && experiencia >= 1 && perdida !== 'vender') || objetivo === 'ingresos') {
+      } else if (perfilPuntaje <= 6) {
         perfil = 'Moderado';
         recomendaciones = 'Bonos corporativos, fondos mixtos, ETFs de dividendos, fondos inmobiliarios.';
         dataChart = [30, 40, 20, 10];
-      } else if (tolerancia === 'alta' && experiencia >= 2 && perdida === 'comprar' && (objetivo === 'crecimiento' || objetivo === 'especulacion') && ahorro === 'si' && deudas === 'no') {
-        perfil = 'Agresivo';
-        recomendaciones = 'Acciones de crecimiento, criptomonedas, materias primas como el oro, fondos de capital riesgo.';
-        dataChart = [10, 30, 40, 20];
-      } else {
+      } else if (perfilPuntaje <= 8) {
         perfil = 'Balanceado';
         recomendaciones = 'Diversificación entre renta fija y renta variable, fondos indexados, ETFs globales.';
         dataChart = [25, 35, 25, 15];
+      } else {
+        perfil = 'Agresivo';
+        recomendaciones = 'Acciones de crecimiento, criptomonedas, materias primas como el oro, fondos de capital riesgo.';
+        dataChart = [10, 30, 40, 20];
       }
 
-      document.getElementById('resultado').innerHTML = `<strong>Perfil de Inversor:</strong> ${perfil}<br><br><strong>Recomendaciones:</strong> ${recomendaciones}`;
+      document.getElementById('resultado').innerHTML = `
+        <strong>Perfil de Inversor (${perfilPuntaje}/10):</strong> ${perfil}<br><br>
+        <strong>Recomendaciones:</strong> ${recomendaciones}<br><br>
+        <strong>Detalle del cálculo:</strong><ul><li>${detalles.join('</li><li>')}</li></ul>`;
 
       const ctx = document.getElementById('simulacionChart').getContext('2d');
       if (window.simChart) window.simChart.destroy();
