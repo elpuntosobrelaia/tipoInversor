@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulario de Perfil de Inversor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(to right, #83a4d4, #b6fbff);
+      padding: 20px;
+    }
+    .container {
+      max-width: 700px;
+      margin: auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 10px;
+    }
+    .intro {
+      font-size: 16px;
+      color: #555;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+    label {
+      display: block;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 8px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+    button {
+      margin-top: 30px;
+      width: 100%;
+      padding: 12px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    .result {
+      margin-top: 30px;
+      padding: 20px;
+      background: #f1f1f1;
+      border-left: 6px solid #007bff;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+    #chartContainer {
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Descubre tu Perfil de Inversor</h1>
+    <p class="intro">
+      Este formulario tiene como objetivo ayudarte a identificar tu perfil como inversor en función de tus características personales, experiencia, tolerancia al riesgo y objetivos financieros. Al completar estas preguntas, podrás conocer qué tipo de productos financieros pueden ajustarse mejor a tu perfil. <strong>Este análisis es solo orientativo</strong> y no constituye una recomendación de inversión personalizada.
+    </p>
+    <form id="investorForm">
+      <label for="edad">Edad:</label>
+      <input type="number" id="edad" name="edad" required>
+
+      <label for="ingresos">¿Cuál es tu ingreso mensual promedio?</label>
+      <select id="ingresos" name="ingresos">
+        <option value="bajo">Menos de 1000€</option>
+        <option value="medio">1000€ - 3000€</option>
+        <option value="alto">Más de 3000€</option>
+      </select>
+
+      <label for="ahorro">¿Tienes un fondo de emergencia (ahorros equivalentes a 3-6 meses de gastos)?</label>
+      <select id="ahorro" name="ahorro">
+        <option value="si">Sí</option>
+        <option value="no">No</option>
+      </select>
+
+      <label for="deudas">¿Tienes actualmente deudas que estés pagando?</label>
+      <select id="deudas" name="deudas">
+        <option value="si">Sí</option>
+        <option value="no">No</option>
+      </select>
+
+      <label for="experiencia">¿Cuánta experiencia tienes invirtiendo?</label>
+      <select id="experiencia" name="experiencia">
+        <option value="0">Ninguna</option>
+        <option value="1">Poca</option>
+        <option value="2">Moderada</option>
+        <option value="3">Alta</option>
+      </select>
+
+      <label for="objetivo">¿Cuál es tu objetivo principal?</label>
+      <select id="objetivo" name="objetivo">
+        <option value="ahorro">Ahorrar sin riesgos</option>
+        <option value="ingresos">Generar ingresos pasivos</option>
+        <option value="crecimiento">Crecimiento del capital</option>
+        <option value="especulacion">Especulación a corto plazo</option>
+      </select>
+
+      <label for="tolerancia">¿Qué tan tolerante eres al riesgo?</label>
+      <select id="tolerancia" name="tolerancia">
+        <option value="baja">Baja</option>
+        <option value="media">Media</option>
+        <option value="alta">Alta</option>
+      </select>
+
+      <label for="horizonte">¿Cuál es tu horizonte de inversión?</label>
+      <select id="horizonte" name="horizonte">
+        <option value="corto">Corto plazo (menos de 2 años)</option>
+        <option value="medio">Medio plazo (2-5 años)</option>
+        <option value="largo">Largo plazo (más de 5 años)</option>
+      </select>
+
+      <label for="perdida">¿Cómo reaccionarías si tu inversión pierde un 20% de su valor?</label>
+      <select id="perdida" name="perdida">
+        <option value="vender">Vendería todo</option>
+        <option value="esperar">Esperaría a que se recupere</option>
+        <option value="comprar">Compraría más</option>
+      </select>
+
+      <button type="submit">Evaluar perfil</button>
+    </form>
+
+    <div class="result" id="resultado"></div>
+    <div id="chartContainer">
+      <canvas id="simulacionChart"></canvas>
+      <p style="font-size: 14px; color: #555; margin-top: 10px;">
+        * Esta gráfica es una simulación ilustrativa de una posible estrategia de asignación de activos para este tipo de perfil de inversor. No constituye una recomendación de inversión.
+      </p>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('investorForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const edad = parseInt(document.getElementById('edad').value);
+      const experiencia = parseInt(document.getElementById('experiencia').value);
+      const objetivo = document.getElementById('objetivo').value;
+      const tolerancia = document.getElementById('tolerancia').value;
+      const horizonte = document.getElementById('horizonte').value;
+      const perdida = document.getElementById('perdida').value;
+      const ahorro = document.getElementById('ahorro').value;
+      const deudas = document.getElementById('deudas').value;
+
+      let perfil = '';
+      let recomendaciones = '';
+      let dataChart = [];
+
+      if ((tolerancia === 'baja' || experiencia === 0 || objetivo === 'ahorro' || perdida === 'vender' || ahorro === 'no' || deudas === 'si')) {
+        perfil = 'Conservador';
+        recomendaciones = 'Depósitos a plazo, bonos del Estado, fondos garantizados, cuentas remuneradas.';
+        dataChart = [60, 20, 10, 10];
+      } else if ((tolerancia === 'media' && experiencia >= 1 && perdida !== 'vender') || objetivo === 'ingresos') {
+        perfil = 'Moderado';
+        recomendaciones = 'Bonos corporativos, fondos mixtos, ETFs de dividendos, fondos inmobiliarios.';
+        dataChart = [30, 40, 20, 10];
+      } else if (tolerancia === 'alta' && experiencia >= 2 && perdida === 'comprar' && (objetivo === 'crecimiento' || objetivo === 'especulacion') && ahorro === 'si' && deudas === 'no') {
+        perfil = 'Agresivo';
+        recomendaciones = 'Acciones de crecimiento, criptomonedas, materias primas como el oro, fondos de capital riesgo.';
+        dataChart = [10, 30, 40, 20];
+      } else {
+        perfil = 'Balanceado';
+        recomendaciones = 'Diversificación entre renta fija y renta variable, fondos indexados, ETFs globales.';
+        dataChart = [25, 35, 25, 15];
+      }
+
+      document.getElementById('resultado').innerHTML = `<strong>Perfil de Inversor:</strong> ${perfil}<br><br><strong>Recomendaciones:</strong> ${recomendaciones}`;
+
+      const ctx = document.getElementById('simulacionChart').getContext('2d');
+      if (window.simChart) window.simChart.destroy();
+      window.simChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['Bonos', 'Acciones', 'Criptomonedas', 'Liquidez'],
+          datasets: [{
+            label: '% de asignación simulada',
+            data: dataChart,
+            backgroundColor: ['#4BC0C0', '#36A2EB', '#FF6384', '#FFCE56']
+          }]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 100
+            }
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
