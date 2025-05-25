@@ -216,23 +216,24 @@
       let perfil = '';
       let recomendaciones = '';
       let dataChart = [];
+      let labels = ['Renta fija', 'Acciones', 'Criptomonedas', 'Liquidez', 'Fondos indexados', 'Bienes raíces', 'Materias primas'];
 
       if (perfilPuntaje <= 3) {
         perfil = 'Conservador';
-        recomendaciones = 'Depósitos a plazo, bonos del Estado, fondos garantizados, cuentas remuneradas.';
-        dataChart = [60, 20, 10, 10];
+        recomendaciones = 'Renta fija, depósitos a plazo, cuentas remuneradas, fondos garantizados.';
+        dataChart = [50, 15, 0, 20, 10, 5, 0];
       } else if (perfilPuntaje <= 6) {
         perfil = 'Moderado';
-        recomendaciones = 'Bonos corporativos, fondos mixtos, ETFs de dividendos, fondos inmobiliarios.';
-        dataChart = [30, 40, 20, 10];
+        recomendaciones = 'Renta fija, fondos mixtos, ETFs de dividendos, fondos inmobiliarios, fondos indexados.';
+        dataChart = [35, 30, 5, 10, 10, 5, 5];
       } else if (perfilPuntaje <= 8) {
         perfil = 'Balanceado';
-        recomendaciones = 'Diversificación entre renta fija y renta variable, fondos indexados, ETFs globales.';
-        dataChart = [25, 35, 25, 15];
+        recomendaciones = 'Diversificación entre renta fija y variable, fondos indexados, ETFs globales, bienes raíces.';
+        dataChart = [20, 35, 10, 10, 15, 5, 5];
       } else {
         perfil = 'Agresivo';
-        recomendaciones = 'Acciones de crecimiento, criptomonedas, materias primas como el oro, fondos de capital riesgo.';
-        dataChart = [10, 30, 40, 20];
+        recomendaciones = 'Acciones de crecimiento, criptomonedas (máx. 20%), materias primas, fondos de capital riesgo, fondos indexados.';
+        dataChart = [10, 40, 20, 5, 15, 5, 5];
       }
 
       document.getElementById('resultado').innerHTML = `
@@ -245,11 +246,11 @@
       window.simChart = new Chart(ctx, {
         type: 'bar',
         data: {
-          labels: ['Bonos', 'Acciones', 'Criptomonedas', 'Liquidez'],
+          labels: labels,
           datasets: [{
             label: '% de asignación simulada',
             data: dataChart,
-            backgroundColor: ['#4BC0C0', '#36A2EB', '#FF6384', '#FFCE56']
+            backgroundColor: ['#4BC0C0', '#36A2EB', '#FF6384', '#FFCE56', '#9966FF', '#00BFFF', '#8B4513']
           }]
         },
         options: {
